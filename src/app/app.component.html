@@ -1,0 +1,91 @@
+<div class="row" >
+  <!-- begin: new task -->
+  <div class="col-40" style="position: relative;">
+    <h1 class="heading">New Task</h1>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <input class="decor-input" type="text" formControlName="title" required placeholder="Add new task..."><br>
+      <p class="property-heading">Description</p>
+      <textarea formControlName="desc" rows="5" cols="30">
+        
+      </textarea>
+      <div class="row fix">
+        <div class="col-50">
+          <p class="property-heading">Due Date</p>
+          <input class="decor-input" type="date" formControlName="date"/>
+        </div>
+        <div class="col-50">
+          <p class="property-heading">Piority</p>
+          <select formControlName="piority">
+            <option value="low">low</option>
+            <option value="normal">normal</option>
+            <option value="high">high</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn">Add</button>
+    </form>
+  </div>
+  <!-- end: new task -->
+
+  <!-- begin: to do list -->
+  <div class="col-60">
+    <h1 class="heading">To Do List</h1>
+    <input class="decor-input" type="text" placeholder="Search..." (keyup)="search($event)">
+
+    <!-- begin: task-item -->
+    <form [formGroup]="formCheck">
+      <div *ngFor="let task of listTask;let i = index">
+        <div class="task-item">
+          <div class="row fix">
+            <div class="col-60" style="padding: 8px 40px;">
+              <label><input type="checkbox" [value]="task.title" (change)="onChange($event)"> {{task.title}}</label>
+            </div>
+            <div class="col-40" style="padding: 8px 40px;">
+              <button class="btn-common btn-detail" (click)="showDetail(task,i)">Detail</button>
+              <button class="btn-common btn-remove" (click)="removeTask(task.title)">Remove</button>
+            </div>
+            </div>
+          </div>
+      </div>
+      <!-- begin: bulk-action -->
+      <div class="bulk-action" *ngIf="show">
+          <div class="row">
+            <div class="col-60" style="padding: 8px 40px;">
+              Bulk Action:
+            </div>
+            <div class="col-40" style="padding: 8px 40px;">
+              <button class="btn-common btn-detail">Done</button>
+              <button class="btn-common btn-remove" (click)="removeList()">Remove</button>
+            </div>
+          </div> 
+      </div>
+      <!-- end: bulk-action -->
+    </form>
+    <!-- end: task-item -->
+      <div class="col">
+        <form [formGroup]="updateForm">
+          <input type="text" formControlName="id" hidden>
+          <input class="decor-input" type="text" formControlName="title" placeholder="Add new task..."><br>
+          <p class="property-heading">Description</p>
+          <textarea formControlName="desc" rows="5" cols="30">
+            
+          </textarea>
+          <div class="row fix">
+            <div class="col-50">
+              <p class="property-heading">Due Date</p>
+              <input class="decor-input" type="date" formControlName="date"/>
+            </div>
+            <div class="col-50">
+              <p class="property-heading">Piority</p>
+              <select formControlName="piority">
+                <option value="low">low</option>
+                <option value="normal">normal</option>
+                <option value="high">high</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn" (click)="update()">Update</button>
+        </form>
+    </div>
+  </div>
+</div>
